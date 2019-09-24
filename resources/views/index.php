@@ -9,7 +9,10 @@
 
 <div id="app">
 <!--    <Updating/>-->
-    <class-name-data-list/>
+<!--    <store-data/>-->
+<!--    <class-name-data-list/>-->
+<!--    <teacher-data/>-->
+    <index/>
 </div>
 
 <script src="/js/index.js"></script>

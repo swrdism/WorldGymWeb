@@ -8,7 +8,7 @@
                 :value="category"
                 v-model="classSwitch"
             >
-            <label for="name">{{category}}</label>
+            <label :for="category">{{category}}</label>
             <br>
             <span v-for=" name  in classNameDataList.map[category].list">
                 <input
@@ -18,7 +18,7 @@
                     v-model="className"
                     @change="categoryHandler"
                 >
-                <label for="name">{{name}}</label>
+                <label :for="name">{{name}}</label>
             </span>
         </div>
         <span>names: {{ className }}</span>
