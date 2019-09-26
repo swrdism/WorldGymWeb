@@ -22,3 +22,4 @@ Route::get('/getIsUpdated','Api\DataController@getIsUpdated');
 Route::get('/getIsUpdating','Api\DataController@getIsUpdating');
 Route::get('/getClassNameDataList','Api\DataController@getClassNameDataList');
 Route::get('/getTeacherDataList','Api\DataController@getTeacherDataList');
+Route::get('/getWorldGymClassList','Api\DataController@getWorldGymClassList');

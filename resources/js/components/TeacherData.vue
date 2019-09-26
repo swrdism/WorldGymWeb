@@ -2,16 +2,15 @@
 
     <div v-if="teacherData">
 
-        <span v-for="name in teacherData">
+        <span v-for="teacher in teacherData">
             <input
                 type="checkbox"
-                :id="name"
-                :value="name"
-                v-model="teacher"
+                :id="teacher.name"
+                :value="teacher.name"
+                v-model="selectedTeacher"
             >
-            <label :for="name">{{name}}</label>
+            <label :for="teacher.name">{{teacher.name}}</label>
         </span>
-        <p>{{teacher}}</p>
     </div>
 
 </template>
@@ -20,36 +19,31 @@
 
     const axios = require('axios');
     export default {
+        props:['shouldSubmit'],
         data () {
             return {
-                rawData:null,
-                teacher:[]
+                teacherData:[],
+                selectedTeacher:[]
             }
         },
         mounted () {
             axios
                 .get('http://localhost/api/getTeacherDataList')
-                .then(response => (this.rawData = response.data))
+                .then(response => (this.teacherData = response.data))
                 .catch(function (error) {
                     console.log(error);
                 });
         },
-        computed:{
-            teacherData:{
-                get()
-                {
-                    if (this.rawData !== null) {
-                        let obj = [];
-                        this.rawData.forEach(({name}) => {
-                            obj.push(name);
-                        })
-                        return obj;
-                    }else{
-                        return null;
-                    }
+        watch:{
+            shouldSubmit:function () {
+                if(this.shouldSubmit) {
+                    this.$root.bus.$emit('selectedTeacher', this.selectedTeacher);
+                }else{
+                    this.selectedTeacher=[];
                 }
             }
         }
+
     }
 
 

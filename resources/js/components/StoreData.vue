@@ -6,22 +6,21 @@
                 type="checkbox"
                 :id="city"
                 :value="city"
-                v-model="citySwitch"
+                v-model="selectedcity"
             >
             <label :for="city">{{city}}</label>
             <br>
-            <span v-for=" data  in storeData.map[city].list">
+            <span v-for=" store  in storeData.map[city].list">
                 <input
                     type="checkbox"
-                    :id="data"
-                    :value="data"
-                    v-model="store"
+                    :id="store"
+                    :value="store"
+                    v-model="selectedStore"
                     @change="cityHandler">
 
-                <label :for="data.name">{{data.name}}</label>
+                <label :for="selectedStore.name">{{store.name}}</label>
             </span>
         </div>
-        <span>names: {{ store }}</span>
     </div>
 
 </template>
@@ -31,11 +30,12 @@
     const axios = require('axios');
 
     export default {
+        props:['shouldSubmit'],
         data () {
             return {
                 rawData:null,
-                store:[],
-                citySwitch:[]
+                selectedStore:[],
+                selectedcity:[]
             }
         },
         mounted () {
@@ -72,14 +72,14 @@
             }
         },
         watch: {
-            citySwitch: function (newVal, oldVal) {
+            selectedcity: function (newVal, oldVal) {
                 let addedCity = newVal.filter((e)=>{
                     return oldVal.indexOf(e) === -1
                 })
                 if(addedCity.length) {
                     this.storeData.map[addedCity].list.forEach((name) => {
-                        if (!this.$data.store.includes(name)) {
-                            this.$data.store.push(name);
+                        if (!this.$data.selectedStore.includes(name)) {
+                            this.$data.selectedStore.push(name);
                         }
                     })
                 }
@@ -88,25 +88,34 @@
                 });
                 if(deletedCity.length) {
                      this.storeData.map[deletedCity].list.forEach((name) => {
-                         let index =this.$data.store.indexOf(name);
-                         this.$data.store.splice( index,1 );
+                         let index =this.$data.selectedStore.indexOf(name);
+                         this.$data.selectedStore.splice( index,1 );
                      })
 
                  }
+            },
+
+            shouldSubmit:function () {
+                if(this.shouldSubmit){
+                    this.$root.bus.$emit('selectedStore',this.selectedStore);
+                }else{
+                    this.selectedStore=[];
+                    this.selectedcity=[];
+                }
             }
         },
         methods:{
             cityHandler(){
                 this.storeData.list.forEach((city)=>{
                     let item = this.storeData.map[city].list.filter((e)=>{
-                        return this.$data.store.indexOf(e) !== -1;
+                        return this.$data.selectedStore.indexOf(e) !== -1;
                         });
                     if (this.storeData.map[city].list.length === item.length){
-                         this.$data.citySwitch.push(city);
+                         this.$data.selectedcity.push(city);
                     }else{
-                        if (this.$data.citySwitch.includes(city)){
-                            let index = this.$data.citySwitch.indexOf(city)
-                            this.$data.citySwitch.splice( index,1 )
+                        if (this.$data.selectedcity.includes(city)){
+                            let index = this.$data.selectedcity.indexOf(city)
+                            this.$data.selectedcity.splice( index,1 )
                         }
 
                     }

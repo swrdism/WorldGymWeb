@@ -11,9 +11,6 @@ class DataController extends Controller
     public function getStoreDataList(){
         return (new DataService())->getStoreDataList();
     }
-    public function getIsUpdating(){
-        return (new DataService())->getIsUpdating();
-    }
 
     public function getIsUpdated(){
         return (new DataService())->getIsUpdated();
@@ -25,5 +22,9 @@ class DataController extends Controller
     public function getTeacherDataList()
     {
         return (new dataService())->getTeacherDataList();
+    }
+    public function getWorldGymClassList()
+    {
+        return (new dataService())->getWorldGymClassList();
     }
 }

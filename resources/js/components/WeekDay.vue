@@ -1,33 +1,34 @@
 <template>
     <div>
-        <input type="checkbox" id="all" value="all" v-model="all" @change="weekdayHandler">
-        <label for="all">week</label>
-        <span v-for="day in days">
-            <input type="checkbox" :id="day" :value="day" v-model="weekday" @change="allHandler">
-            <label :for="day">{{day}}</label>
+        <input type="checkbox" id="all" value="all" v-model="all" @change="selectedWeekdayHandler">
+        <label for="all">all</label>
+        <span v-for="weekday in weekdays">
+            <input type="checkbox" :id="weekday" :value="weekday" v-model="selectedWeekday" @change="allHandler">
+            <label :for="weekday">{{weekday}}</label>
         </span>
     </div>
 </template>
 
 <script>
     export default {
+        props:['shouldSubmit'],
         data(){
             return{
                 all:null,
-                weekday:[],
-                days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+                selectedWeekday:[],
+                weekdays:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
             }
         },
         methods:{
-            weekdayHandler(){
+            selectedWeekdayHandler(){
                 if(this.$data.all){
-                    this.$data.weekday=this.$data.days;
+                    this.$data.selectedWeekday=this.$data.weekdays;
                 }else{
-                    this.$data.weekday=[];
+                    this.$data.selectedWeekday=[];
                 }
             },
             allHandler(){
-                if(this.$data.weekday.length===7){
+                if(this.$data.selectedWeekday.length===7){
                     this.$data.all =true;
                 }else{
                     if(this.$data.all){
@@ -35,6 +36,16 @@
                     }
                 }
 
+            }
+        },
+        watch:{
+            shouldSubmit:function () {
+                if(this.shouldSubmit){
+                    this.$root.bus.$emit('selectedWeekday',this.selectedWeekday);
+                }else{
+                    this.selectedWeekday=[];
+                    this.all=false;
+                }
             }
         }
     }

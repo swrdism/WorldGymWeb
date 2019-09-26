@@ -8,10 +8,6 @@
 <body>
 
 <div id="app">
-<!--    <Updating/>-->
-<!--    <store-data/>-->
-<!--    <class-name-data-list/>-->
-<!--    <teacher-data/>-->
     <index/>
 </div>
 
