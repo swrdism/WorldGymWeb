@@ -4,9 +4,13 @@
             資料更新中
         </div>
         <div v-show = "isUpdated && !isSubmit">
+            <p class="selection-title">店別：</p>
             <store-data :shouldSubmit="isSubmit" />
+            <p class="selection-title">課程：</p>
             <ClassNameDataList :shouldSubmit="isSubmit"/>
+            <p class="selection-title">星期：</p>
             <WeekDay :shouldSubmit="isSubmit"/>
+            <p class="selection-title">老師：</p>
             <teacher-data :shouldSubmit="isSubmit"/>
             <input type="button" value="送出" @click="submit">
          </div>

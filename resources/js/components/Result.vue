@@ -1,12 +1,22 @@
 <template>
 
     <div v-if="answer">
-        <div v-for="ans in answer">
-            {{ans}}
-        </div>
+        <table>
+
+        <tr v-for="ans in answer">
+            <td>{{ans.city + ans.storeName}}</td>
+            <td>{{ans.name+'（'+ ans.category +'）'}}</td>
+            <td>{{ans.teacher}}</td>
+            <td>{{ans.day}}</td>
+            <td>{{ans.startTime.toString()}}</td>
+            <td>{{ans.endTime.toString()}}</td>
+        </tr>
+        </table>
+
     </div>
-
-
+    <div v-else>
+        沒有課程符合您輸入的條件
+    </div>
 </template>
 
 <script>
@@ -79,10 +89,8 @@
                             if(!this.class.includes(temp[data].name)){
                                 temp.splice(data,1);
                             }
-
                         }
                     }
-                    return temp
                 }
             }
         }

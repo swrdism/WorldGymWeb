@@ -18,7 +18,7 @@
                     v-model="selectedStore"
                     @change="cityHandler">
 
-                <label :for="selectedStore.name">{{store.name}}</label>
+                <label :for="store.name">{{store.name}}</label>
             </span>
         </div>
     </div>
